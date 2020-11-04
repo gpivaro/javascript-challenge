@@ -1,3 +1,5 @@
+// Level 1: Automatic Table and Date Search
+
 ///////////////////////////////////////////////////////////////////////////////
 /* Create a basic HTML web page. Using the UFO dataset provided in the form of 
 an array of JavaScript objects, write code that appends a table to your web page 
@@ -17,7 +19,6 @@ data.forEach(ufo => {
 
   // Step 3:  Use `Object.entries` to log each ufo observation value
   Object.entries(ufo).forEach(([key, value]) => {
-    //console.log(key, value);
 
     // Step 4: Use d3 to append 1 cell per ufo observation value (Date, City, State, Country, Shape, Duration, Comments)
     var cell = row.append("td");
@@ -48,13 +49,14 @@ inputField.on("change", function () {
 
   // Select the input element and get the raw HTML node
   var newText = d3.event.target.value;
-  console.log(newText)
+
+  // Check if the data field is empty to decide how to populate the table
   if (newText === '') {
     // if the data field is empty load the how table; assign filtered data as the whole data set
     var filteredUfos = ufos;
   }
   else {
-    // Use the form input to filter the data by blood type
+    // Use the form input to filter the data by datetime
     var filteredUfos = ufos.filter(ufo => ufo.datetime === newText);
   }
 
@@ -66,7 +68,6 @@ inputField.on("change", function () {
 
     // Step 3:  Use `Object.entries` to log each ufo observation value
     Object.entries(ufo).forEach(([key, value]) => {
-      //console.log(key, value);
 
       // Step 4: Use d3 to append 1 cell per ufo observation value (Date, City, State, Country, Shape, Duration, Comments)
       var cell = row.append("td");
@@ -77,3 +78,12 @@ inputField.on("change", function () {
     });
   });
 });
+
+
+// Level 2: Multiple Search Categories
+
+///////////////////////////////////////////////////////////////////////////////
+/* Using multiple input tags and/or select dropdowns, write JavaScript code so
+the user can to set multiple filters and search for UFO sightings using the
+following criteria based on the table columns: date/time, city, state, country, shape */
+///////////////////////////////////////////////////////////////////////////////
