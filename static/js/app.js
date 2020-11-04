@@ -11,7 +11,6 @@ var tbody_old = tbody
 
 // Step 1: Loop Through `data` and log each ufo observation object
 data.forEach(ufo => {
-  //console.log(ufo);
 
   // Step 2:  Use d3 to append one table row `tr` for each ufo observation object
   var row = tbody.append("tr");
@@ -44,20 +43,25 @@ var inputField = d3.select("#datetime");
 
 // Complete the form handler for the form
 inputField.on("change", function () {
-
-  // Remove all table rows from tbody
+  // Remove all table rows from tbody (update table)
   var table = d3.select("tbody").selectAll("tr").remove()
 
+  // Select the input element and get the raw HTML node
   var newText = d3.event.target.value;
-  console.log(newText);
+  console.log(newText)
+  if (newText === '') {
+    // if the data field is empty load the how table; assign filtered data as the whole data set
+    var filteredUfos = ufos;
+  }
+  else {
+    // Use the form input to filter the data by blood type
+    var filteredUfos = ufos.filter(ufo => ufo.datetime === newText);
+  }
 
-  var filteredUfos = ufos.filter(ufo => ufo.datetime === newText);
-  console.log(filteredUfos)
-
+  // Step 1: Loop Through `filteredUfos` and log each ufo observation object
   filteredUfos.forEach(ufo => {
-    //console.log(ufo);
 
-    // Step 2:  Use d3 to append one table row `tr` for each ufo observation object
+    // Step 2:  Use d3 to append one table row `tr` for each filtered observation object
     var row = tbody.append("tr");
 
     // Step 3:  Use `Object.entries` to log each ufo observation value
@@ -72,31 +76,4 @@ inputField.on("change", function () {
       cell.text(value);
     });
   });
-
 });
-
-/*
-// Input fields can trigger a change event when new text is entered.
-inputField.on("change", function() {
-  var newText = d3.event.target.value;
-  console.log(newText);
-});
-*/
-
-
-// // Complete the form handler for the form
-// inputField.on("change", function () {
-
-
-//   // Select the input element and get the raw HTML node
-//   var newText = d3.event.target.value;
-//   console.log(newText);
-
-//   // Get the value property of the input element
-
-//   // Use the form input to filter the data by blood type
-//   var dateSelected = ufos.filter(ufo => { ufo.datetime === newText });
-
-//   console.log(dateSelected)
-
-// });
