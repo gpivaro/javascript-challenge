@@ -32,8 +32,7 @@ data.forEach(ufo => {
 
 ///////////////////////////////////////////////////////////////////////////////////
 /* Use a date form in your HTML document and write JavaScript code that will listen 
-for events and search through the date/time column to find rows that match user input.
-*/
+for events and search through the date/time column to find rows that match user input.*/
 ///////////////////////////////////////////////////////////////////////////////////
 
 // Assign the data from `data.js` to a descriptive variable
@@ -87,3 +86,74 @@ inputField.on("change", function () {
 the user can to set multiple filters and search for UFO sightings using the
 following criteria based on the table columns: date/time, city, state, country, shape */
 ///////////////////////////////////////////////////////////////////////////////
+
+// Create an array with the unique date
+var dates = [];
+ufos.forEach(date => {
+  if (dates.includes(date.datetime) === false) {
+    dates.push(date.datetime);
+  };
+});
+console.log(dates)
+
+// Create an array with the unique cities
+var cities = [];
+ufos.forEach(city => {
+  if (cities.includes(city.city) === false) {
+    cities.push(city.city);
+  };
+});
+console.log(cities)
+
+
+// Create an array with the unique states
+var states = [];
+ufos.forEach(state => {
+  if (states.includes(state.state) === false) {
+    states.push(state.state);
+  };
+});
+console.log(states)
+
+// Create an array with the unique country
+var countries = [];
+ufos.forEach(country => {
+  if (countries.includes(country.country) === false) {
+    countries.push(country.country);
+  };
+});
+console.log(countries)
+
+// Create an array with the unique shape
+var shapes = [];
+ufos.forEach(shape => {
+  if (shapes.includes(shape.shape) === false) {
+    shapes.push(shape.shape);
+  };
+});
+console.log(shapes)
+
+
+
+
+// Clickable Dropdown
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function (event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
