@@ -69,12 +69,38 @@ function filterBasedTrigger(dataSet, key, newText) {
     return filteredData
 };
 
+///////////////////////////////////////////////////////////////////////////////
+/* Using multiple input tags and/or select dropdowns, write JavaScript code so
+the user can to set multiple filters and search for UFO sightings using the
+following criteria based on the table columns: date/time, city, state, country, shape */
+///////////////////////////////////////////////////////////////////////////////
+
+
+// Define a function that use the selector to change the filter object
+function selectFieldChange(inputSelector, key, newText) {
+    // Conditional test
+    if (inputSelector == key & newText == '') {
+        delete filter[key];
+        console.log('AAA');
+    } else if (inputSelector == key) {
+        filter[key] = newText;
+        console.log('BBB');
+    } else if (inputSelector != key & oldDateText == '') {
+        delete filter[key];
+        console.log('CCC');
+    };
+    return filter[key]
+};
+
+
 
 
 const filter = {};
 oldCityText = '';
 oldDateText = '';
 oldStateText = '';
+oldCountryText = '';
+oldShapeText = '';
 
 // Define a function to filter data based on a text from input box
 function filterData() {
@@ -84,80 +110,89 @@ function filterData() {
 
     // Select the input element and get the raw HTML node
     var newText = d3.event.target.value;
+    console.log(`Event value: ${newText}`)
+    // Define a selector to identify which id was triggered
     var inputSelector = d3.event.target.id;
+    console.log(`Event id: ${inputSelector}`)
 
-    console.log(newText)
-    console.log(inputSelector)
-
-    // var datetimeText = d3.select("#datetime").value;
-    // console.log(datetimeText);
-    // var cityText = d3.select("#city").value;
-    // console.log(cityText);
-
-    // if (cityText === undefined) {
-    //     const filter = {
-    //         datetime: datetimeText,
-    //     };
-    // }
-    // else {
-    //     const filter = {
-    //         datetime: datetimeText,
-    //         city: cityText,
-    //     };
-    // };
+    // selectFieldChange(inputSelector, 'datetime', newText)
 
 
-
+    // Conditional tests based on the selector id to build the filter object
     if (inputSelector == 'datetime' & newText == '') {
-        var escapeTest = 1;
         delete filter.datetime;
-        console.log('AA');
+        console.log('datetime: AAA');
     } else if (inputSelector == 'datetime') {
         filter.datetime = newText;
         oldDateText = newText;
-        console.log('BB');
+        console.log('datetime: BBB');
     } else if (inputSelector != 'datetime' & oldDateText == '') {
         filter.datetime = oldDateText;
         delete filter.datetime;
-        console.log('CC');
+        console.log('datetime CCC');
     };
 
     if (inputSelector == 'city' & newText == '') {
-        var escapeTest = + 1;
         delete filter.city;
-        console.log('A');
+        console.log(`${inputSelector}: AAA`);
     } else if (inputSelector == 'city') {
         filter.city = newText;
         oldCityText = newText;
-        console.log('B');
+        console.log(`${inputSelector}: BBB`);
     } else if (inputSelector != 'city' & oldCityText == '') {
         filter.city = oldCityText;
-        console.log('C');
         delete filter.city;
+        console.log(`${inputSelector}: CCC`);
     };
 
     if (inputSelector == 'state' & newText == '') {
-        var escapeTest = + 1;
         delete filter.state;
-        console.log('AAA');
+        console.log(`${inputSelector}: AAA`);
     } else if (inputSelector == 'state') {
         filter.state = newText;
         oldStateText = newText;
-        console.log('BBB');
+        console.log(`${inputSelector}: BBB`);
     } else if (inputSelector != 'state' & oldCityText == '') {
         filter.state = oldStateText;
-        console.log('CCC');
         delete filter.state;
+        console.log(`${inputSelector}: CCC`);
     };
 
+    if (inputSelector == 'country' & newText == '') {
+        delete filter.country;
+        console.log(`${inputSelector}: AAA`);
+    } else if (inputSelector == 'country') {
+        filter.country = newText;
+        oldCountryText = newText;
+        console.log(`${inputSelector}: BBB`);
+    } else if (inputSelector != 'state' & oldCountryText == '') {
+        filter.country = oldCountryText;
+        delete filter.country;
+        console.log(`${inputSelector}: CCC`);
+    };
+
+    if (inputSelector == 'shape' & newText == '') {
+        // var escapeTest = + 1;
+        delete filter.shape;
+        console.log(`${inputSelector}: AAA`);
+    } else if (inputSelector == 'shape') {
+        filter.shape = newText;
+        oldShapeText = newText;
+        console.log(`${inputSelector}: BBB`);
+    } else if (inputSelector != 'shape' & oldShapeText == '') {
+        filter.shape = oldShapeText;
+        delete filter.shape;
+        console.log(`${inputSelector}: CCC`);
+    };
     console.log(filter)
 
-    if (escapeTest == 2) {
+    // Conditional test to filter the data or load the whole table
 
+    if (filter.length == 0) {
+        // If the filter object is empty then load the table with origina/ulfitered data
         updateTable(ufos, tbody);
     } else {
-
-
+        // Filter data based on the filter object
         var results = data.filter(item => {
             for (let key in filter) {
                 if (item[key] === undefined || item[key] != filter[key])
@@ -165,82 +200,26 @@ function filterData() {
             }
             return true;
         });
-
-
-        updateTable(results, tbody)
+        // Load table with filtered data
+        updateTable(results, tbody);
     };
-
-
-
-
-    // if (inputSelector === 'datetime') {
-    //     var datetimeFiltered = filterBasedTrigger(ufos, "datetime", newText);
-    // } else if (inputSelector === 'city') {
-    //     var cityFiltered = filterBasedTrigger(ufos, "city", newText);
-    // }
-
-    // console.log(datetimeFiltered);
-    // console.log(cityFiltered);
-
-
-    // var datetimeText = d3.select("#datetime").value;
-    // console.log(datetimeText);
-    // if (datetimeText === undefined) {
-    //     console.log("A");
-    // } else if (datetimeText === ' ') {
-    //     console.log("B");
-    // } else {
-    //     console.log("C");
-    // };
-
-
-    // updateTable(datetimeFiltered, tbody);
-    // updateTable(cityFiltered, tbody);
-
-
-
-    // var filteredCity = cityFiltered[0].city
-
-    // function selectNamesWithL(student) {
-    //     return student.city === filteredCity
-    // }
-
-    // var studentsWithL = datetimeFiltered.filter(selectNamesWithL)
-    // console.log(studentsWithL)
-
-    // // console.log(filteredCity)
-
-    // // console.log(datetimeFiltered.filter(element => { element.city == filteredCity }))
-
 };
 
 
-
-
-// Getting a reference to the input element on the page with the id property set to 'datetime'
+// Getting a reference to the input element on the 
+// page with the id property set to 'datetime'
 var inputFieldDate = d3.select("#datetime");
 var inputFieldCity = d3.select("#city");
 var inputFieldState = d3.select("#state");
+var inputFieldCountry = d3.select("#country");
+var inputFieldShape = d3.select("#shape");
 
 
 // Complete the form handler for the form
 inputFieldDate.on("change", filterData);
 inputFieldCity.on("change", filterData);
 inputFieldState.on("change", filterData);
-
-// d3.selectAll("input").on("change", function () {
-//     var changes = d3.select(this);
-//     console.log(changes)
-// });
-
-// console.log(d3.select("#datetime").value)
-
-// Level 2: Multiple Search Categories
-
-///////////////////////////////////////////////////////////////////////////////
-/* Using multiple input tags and/or select dropdowns, write JavaScript code so
-the user can to set multiple filters and search for UFO sightings using the
-following criteria based on the table columns: date/time, city, state, country, shape */
-///////////////////////////////////////////////////////////////////////////////
+inputFieldCountry.on("change", filterData);
+inputFieldShape.on("change", filterData);
 
 
