@@ -71,13 +71,16 @@ function filterBasedTrigger(dataSet, key, newText) {
 
 
 
-
-
+const filter = {};
+oldCityText = '';
+oldDateText = '';
+oldStateText = '';
 
 // Define a function to filter data based on a text from input box
 function filterData() {
     // Remove all table rows from tbody (update table)
     var table = d3.select("tbody").selectAll("tr").remove();
+
 
     // Select the input element and get the raw HTML node
     var newText = d3.event.target.value;
@@ -86,26 +89,109 @@ function filterData() {
     console.log(newText)
     console.log(inputSelector)
 
+    // var datetimeText = d3.select("#datetime").value;
+    // console.log(datetimeText);
+    // var cityText = d3.select("#city").value;
+    // console.log(cityText);
 
-    if (inputSelector === 'datetime') {
-        var datetimeFiltered = filterBasedTrigger(ufos, "datetime", newText);
-    } else if (inputSelector === 'city') {
-        var cityFiltered = filterBasedTrigger(ufos, "city", newText);
-    }
+    // if (cityText === undefined) {
+    //     const filter = {
+    //         datetime: datetimeText,
+    //     };
+    // }
+    // else {
+    //     const filter = {
+    //         datetime: datetimeText,
+    //         city: cityText,
+    //     };
+    // };
 
-    console.log(datetimeFiltered);
-    console.log(cityFiltered);
 
 
-    var datetimeText = d3.select("#datetime").value;
-    console.log(datetimeText);
-    if (datetimeText === undefined) {
-        console.log("A");
-    } else if (datetimeText === ' ') {
-        console.log("B");
-    } else {
-        console.log("C");
+    if (inputSelector == 'datetime' & newText == '') {
+        var escapeTest = 1;
+        delete filter.datetime;
+        console.log('AA');
+    } else if (inputSelector == 'datetime') {
+        filter.datetime = newText;
+        oldDateText = newText;
+        console.log('BB');
+    } else if (inputSelector != 'datetime' & oldDateText == '') {
+        filter.datetime = oldDateText;
+        delete filter.datetime;
+        console.log('CC');
     };
+
+    if (inputSelector == 'city' & newText == '') {
+        var escapeTest = + 1;
+        delete filter.city;
+        console.log('A');
+    } else if (inputSelector == 'city') {
+        filter.city = newText;
+        oldCityText = newText;
+        console.log('B');
+    } else if (inputSelector != 'city' & oldCityText == '') {
+        filter.city = oldCityText;
+        console.log('C');
+        delete filter.city;
+    };
+
+    if (inputSelector == 'state' & newText == '') {
+        var escapeTest = + 1;
+        delete filter.state;
+        console.log('AAA');
+    } else if (inputSelector == 'state') {
+        filter.state = newText;
+        oldStateText = newText;
+        console.log('BBB');
+    } else if (inputSelector != 'state' & oldCityText == '') {
+        filter.state = oldStateText;
+        console.log('CCC');
+        delete filter.state;
+    };
+
+    console.log(filter)
+
+    if (escapeTest == 2) {
+
+        updateTable(ufos, tbody);
+    } else {
+
+
+        var results = data.filter(item => {
+            for (let key in filter) {
+                if (item[key] === undefined || item[key] != filter[key])
+                    return false;
+            }
+            return true;
+        });
+
+
+        updateTable(results, tbody)
+    };
+
+
+
+
+    // if (inputSelector === 'datetime') {
+    //     var datetimeFiltered = filterBasedTrigger(ufos, "datetime", newText);
+    // } else if (inputSelector === 'city') {
+    //     var cityFiltered = filterBasedTrigger(ufos, "city", newText);
+    // }
+
+    // console.log(datetimeFiltered);
+    // console.log(cityFiltered);
+
+
+    // var datetimeText = d3.select("#datetime").value;
+    // console.log(datetimeText);
+    // if (datetimeText === undefined) {
+    //     console.log("A");
+    // } else if (datetimeText === ' ') {
+    //     console.log("B");
+    // } else {
+    //     console.log("C");
+    // };
 
 
     // updateTable(datetimeFiltered, tbody);
@@ -134,11 +220,13 @@ function filterData() {
 // Getting a reference to the input element on the page with the id property set to 'datetime'
 var inputFieldDate = d3.select("#datetime");
 var inputFieldCity = d3.select("#city");
+var inputFieldState = d3.select("#state");
 
 
 // Complete the form handler for the form
 inputFieldDate.on("change", filterData);
 inputFieldCity.on("change", filterData);
+inputFieldState.on("change", filterData);
 
 // d3.selectAll("input").on("change", function () {
 //     var changes = d3.select(this);
@@ -156,27 +244,3 @@ following criteria based on the table columns: date/time, city, state, country, 
 ///////////////////////////////////////////////////////////////////////////////
 
 
-
-
-// var findCity = data.forEach(element => console.log(element.city === 'fresno'))
-
-var findDate = data.filter(element => element.datetime === '1/1/2010');
-console.log(findDate);
-
-var findCity = findDate.filter(element => element.city === 'el cajon');
-console.log(findCity);
-
-
-
-var datetimeText = d3.select("#datetime").value;
-
-console.log(datetimeText);
-
-
-if (datetimeText === undefined) {
-    console.log("A");
-} else if (datetimeText === ' ') {
-    console.log("B");
-} else {
-    console.log("C");
-};
