@@ -31,7 +31,7 @@ This repository contains code that will create a table dynamically based upon a 
 The user is able to filter using a single or multiple fiels, as can be seen below.
 ![index_level_2_filter_2.png](UFO-level-2/static/images/index_level_2_filter_2.png)
 
-Here, the results is based on a multiple fiels search:
+Here, the result is based on a multiple fiels search:
 ![index_level_2_filter_1.png](UFO-level-2/static/images/index_level_2_filter_1.png)
 
 - - -
