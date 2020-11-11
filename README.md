@@ -33,13 +33,13 @@ This repository contains code that will create a table dynamically based upon a 
   5. `shape`
 
 The user is able to filter using a single or multiple fiels, as can be seen below.
-
 <br/>
+
 ![index_level_2_filter_2.png](UFO-level-2/static/images/index_level_2_filter_2.png)
 
 Here, the result is based on a multiple fiels search:
-
 <br/>
+
 ![index_level_2_filter_1.png](UFO-level-2/static/images/index_level_2_filter_1.png)
 
 - - -
