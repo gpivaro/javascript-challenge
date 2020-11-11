@@ -1,4 +1,4 @@
-# JavaScript Homework - JavaScript and DOM Manipulation
+# JavaScript and DOM Manipulation
 
 ### Rice University Data Analytics and Visualization Boot Camp 2020
 
